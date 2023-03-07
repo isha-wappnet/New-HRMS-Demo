@@ -2,6 +2,16 @@
 @section('content')
     @include('layout.header')
     <style>
+        .cardStyle {
+            width: 500px;
+            border-color: white;
+            background: #fff;
+            padding: 34px 0;
+            border-radius: 4px;
+            margin: 100px 0;
+            box-shadow: 0px 0 2px 0 rgba(0, 0, 0, 0.25);
+        }
+
         .formTitle {
             font-weight: 600;
             margin-top: 20px;
@@ -87,7 +97,6 @@
         }
     </style>
 
-
     <div id="page-wrapper">
         <div class="container-fluid">
             <div class="row bg-title">
@@ -108,82 +117,63 @@
             </div>
 
 
-            @if (session('error'))
-                <div class="alert alert-danger alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    {{ session('error') }}
+            <form action="{{ route('edit') }}" method="post" name="useredit" id="useredit">
+                <h2 class="formTitle">
+                    Edit Profile
+                </h2>
+                @csrf
+                @method('put')
+                <div class="inputDiv">
+                    <label>New name</label>
+                    <input type="hidden" id="id" value="{{ $user->id }}" name="id">
+                    <input type="text" id="name" value="{{ $user->name }}" name="name">
+                    {{-- @error('new_name')
+     <span class="text-danger">{{ $message }}</span>
+ @enderror --}}
                 </div>
-            @endif
-            @if (session('success'))
-                <div class="alert alert-success alert-dismissable">
-                    <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
-                    {{ session('success') }}
+
+                <div class="inputDiv">
+                    <label>New Email</label>
+                    <input type="email" id="email" value="{{ $user->email }}" name="email">
+                    {{-- @error('new_email')
+   <span class="text-danger">{{ $message }}</span>
+@enderror --}}
                 </div>
-            @endif
 
 
 
-            <div class="row">
-                <div class="col-sm-12">
-                    <div class="white-box">
+                <div class="buttonWrapper">
+                    <button type="submit" class="submitButton pure-button pure-button-primary">
+                        <span>Edit Profile</span>
 
-                        <form action="{{ route('update') }}" method="post" name="userprofile" id="userprofile">
-                            <h2 class="formTitle">
-                                Update Profile
-                            </h2>
-                            @csrf
-                            <div class="inputDiv">
-                                <label>New name</label>
-                                <input type="text" id="name" name="name" value="{{ Auth::user()->name }}">
-                                @error('new_name')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-                            <div class="inputDiv">
-                                <label>New Email</label>
-                                <input type="email" id="email" name="email" value="{{ Auth::user()->email }}">
-                                @error('new_email')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
-
-
-
-                            <div class="buttonWrapper">
-                                <button type="submit" class="submitButton pure-button pure-button-primary">
-                                    <span>Update Profile</span>
-
-                                </button>
-                            </div>
-
-                        </form>
-                    </div>
+                    </button>
                 </div>
-                <script>
-                    $('#userprofile').validate({
-                        rules: {
 
-                            name: {
-                                required: true,
-                            },
-                            email: {
-                                required: true,
+            </form>
+            <script>
+                $('#userprofile').validate({
+                    rules: {
 
-                            },
+                        name: {
+                            required: true,
+                        },
+                        email: {
+                            required: true,
 
                         },
-                        messages: {
 
-                            name: {
-                                required: "Please enter new name",
-                            },
-                            email: {
-                                required: "Please enter new email",
-                            },
+                    },
+                    messages: {
 
+                        name: {
+                            required: "Please enter new name",
                         },
-                    })
-                </script>
-                @include('layout.footer')
-            @endsection
+                        email: {
+                            required: "Please enter new email",
+                        },
+
+                    },
+                })
+            </script>
+            @include('layout.footer')
+        @endsection

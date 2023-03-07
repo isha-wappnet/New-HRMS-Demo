@@ -93,6 +93,8 @@ class UserController extends Controller
 
         return view('auth.change-password');
     }
+
+    
     //change password function------------------------------------------------------------
 
     public function submitchangepassword(Request $request)
@@ -151,20 +153,52 @@ class UserController extends Controller
     }
 
 
+
+    ///Data table----------------
+
     public function index(Request $request)
     {
         if ($request->ajax()) {
-            $data = User::select('id','name','email')->get();
+            $data = User::all();
             return Datatables::of($data)->addIndexColumn()
-                ->addColumn('action', function($row){
-                    $btn = '<a href="javascript:void(0)" class="btn btn-primary btn-sm">View</a>';
-                    return $btn;
-                })
+                ->addColumn("action", '<form action="{{route("users.destroy",$id)}}" method="POST">
+                @csrf
+                @method("DELETE")
+                
+                    <a  href="{{route("users.edit",$id)}}" title="Edit"  >
+                    <i style="font-size:20px;color:green;background-color:white;">Edit</i>
+                </a>
+                <button type ="submit" id="btn" title="Delete" style="font-size:24px;color:red;background-color:white;border:0px;">
+                    <i style="font-size:12px;color:red;background-color:white;">Delete</i>
+                </button> </form>')
                 ->rawColumns(['action'])
+                ->addIndexColumn()
                 ->make(true);
         }
+        return view('auth.user-table');
+    }
+    public function delete($id)
+    {
 
-        return view('auth\user-table');
+        User::find($id)->delete();
+        return back()->with('success', "Data deleted successfully");
+    }
+    public function edit($id)
+    {
+        $user = User::find($id);
+        return view('auth.edit-user', compact('user'));
     }
 
+    public function editprofile(Request $request)
+    {
+
+        $request->validate([
+            'id' => 'required',
+            'name' => 'required|min:4|string|max:255',
+            'email' => 'required|email|string|max:255'
+        ]);
+        $user = User::find($request->id);
+        $user->update($request->only('name', 'email'));
+        return redirect()->route('users.index')->withSuccess('sucess', 'User updated successfully.');
+    }
 }

@@ -69,7 +69,7 @@
     <script src="{{ asset('assets/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- Menu Plugin JavaScript -->
     <script src="assets/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
-
+    
     <!--slimscroll JavaScript -->
     <script src="assets/js/jquery.slimscroll.js"></script>
     <!--Wave Effects -->

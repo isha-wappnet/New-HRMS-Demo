@@ -46,4 +46,21 @@ Route::get('userprofile', [UserController::class, "userprofile"]);
 Route::post('userprofile', [UserController::class, "profileUpdate"])->name('update');
 
 
+//EMPLOYEE ROUTES
+
 Route::get('users', [UserController::class, 'index'])->name('users.index');
+Route::delete('/delete/{id}', [UserController::class, "delete"])->name('users.destroy')->middleware(['auth','role:admin']);
+Route::get('/edit/{id}', [UserController::class, "edit"])->name('users.edit')->middleware(['auth','role:admin']);
+Route::put('update', [UserController::class, "editprofile"])->name('edit')->middleware(['auth','role:admin']);
+
+
+
+
+
+
+
+
+
+
+
+?>

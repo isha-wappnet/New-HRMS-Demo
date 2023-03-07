@@ -357,7 +357,7 @@
                     <ul class="nav nav-second-level">
                         <li><a href="form-basic.html">Basic Forms</a></li>
                         <li><a href="userprofile">Form Update Profile</a></li>
-                        <li><a href="change-password">Form Change Password</a></li>
+                        <li><a href="changepassword">Form Change Password</a></li>
                         <li><a href="form-material-elements.html">Form Material</a></li>
                         <li><a href="form-upload.html">File Upload</a></li>
                         <li><a href="form-mask.html">Form Mask</a></li>

@@ -2,6 +2,12 @@
 
 @section('content')
 <title>Login page</title>
+<script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+<script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+    integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
   <section id="wrapper" class="login-register">
   <div class="login-box">
       <div class="white-box">
@@ -117,17 +123,5 @@
       },
     })
     </script>
-      {{-- <script src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/js/toastr.js"></script>
-
-      <script>
-          $(document).ready(function() {
-              toastr.options.timeOut = 10000;
-              @if (Session::has('error'))
-                  toastr.error('{{ Session::get('error') }}');
-              @elseif(Session::has('success'))
-                  toastr.success('{{ Session::get('success') }}');
-              @endif
-          });
-      </script> --}}
-    @endsection
+ @endsection
 

@@ -1,6 +1,12 @@
 @extends('layout.auth')
 
 @section('content')
+    <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.5/jquery.validate.min.js"
+        integrity="sha512-rstIgDs0xPgmG6RX1Aba4KV5cWJbAMcvRCVmglpam9SoHZiUCyQVDdH2LPlxoHtrv17XWblE/V/PP+Tr04hbtA=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     @if (session('error'))
         <div class="alert alert-danger alert-dismissable">
             <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -77,7 +83,7 @@
         </div>
     </section>
 
-       <script>
+    <script>
         $('#registerform').validate({
             rules: {
                 name: {
@@ -103,7 +109,8 @@
                     required: "Please enter valid email id",
                 },
                 password: {
-                    required: "Please enter password and should contain the folling pormat",
+                    required: "Please enter password and it should contain at least 8 characters in length, one uppercase letter,one lower case,at least one digit, a special character"
+        
                 },
                 cpassword: {
                     required: "Confirm password is required",
@@ -113,4 +120,4 @@
 
         })
     </script>
-    @endsection
+@endsection

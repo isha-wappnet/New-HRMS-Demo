@@ -53,10 +53,11 @@
                                 <th>ID</th>
                                 <th>Name</th>
                                 <th>Email</th>
-                                <th width="100px">Action</th>
+                                @role('admin')<th width="100px">Action</th>@endrole
                             </tr>
                         </thead>
-                        <tbody></tbody>
+                        <tbody>
+                       </tbody>
                     </table>
                 </div>
             </div>
