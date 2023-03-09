@@ -129,12 +129,12 @@
                     {{ session('error') }}
                 </div>
             @endif
-            @if (session('success'))
+          {{--  @if (session('success'))
                 <div class="alert alert-success alert-dismissable">
                     <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
                     {{ session('success') }}
                 </div>
-            @endif
+            @endif --}}
             <div class="row">
                 <div class="col-sm-12">
                     <div class="white-box">
@@ -147,27 +147,16 @@
                             <div class="inputDiv">
                                 <label>Current Password</label>
                                 <input type="password" id="currentpassword" name="currentpassword">
-                                @error('currentpassword')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
-
                             <div class="inputDiv">
                                 <label>New Password</label>
                                 <input type="password" id="new_password" name="new_password">
-                                @error('new_password')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
-                            </div>
+                           </div>
 
                             <div class="inputDiv">
                                 <label>Confirm Password</label>
                                 <input type="password" id="confirmPassword" name="confirmPassword">
-                                @error('confirmPassword')
-                                    <span class="text-danger">{{ $message }}</span>
-                                @enderror
                             </div>
-
                             <div class="buttonWrapper">
                                 <button type="submit" class="submitButton pure-button pure-button-primary">
                                     <span>Continue</span>
@@ -209,5 +198,24 @@
                         },
                     })
                 </script>
+                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+                 integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+             <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+                 integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
+                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+             @if (session('success'))
+                 <script>
+                     swal("Congrulation!!", "  {!! session('success') !!}", "success", {
+                         button: "OK"
+                     });
+                 </script>
+             @endif
+             @if (session('error'))
+                 <script>
+                     swal("Opps!!!", "  {!! session('error') !!}", "error", {
+                         button: "OK"
+                     });
+                 </script>
+             @endif
                 @include('layout.footer')
             @endsection

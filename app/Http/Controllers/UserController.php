@@ -111,6 +111,7 @@ class UserController extends Controller
                 'regex:/[A-Z]/',      // must contain at least one uppercase letter
                 'regex:/[0-9]/',      // must contain at least one digit
                 'regex:/[@$!%*#?&]/', // must contain a special character
+            'confirmPassword'=>'required',
             ],
         ]);
 
@@ -149,7 +150,7 @@ class UserController extends Controller
         $user->name = $request['name'];
         $user->email = $request['email'];
         $user->save();
-        return back()->with('message', 'Profile Updated');
+        return back()->with('success', 'Profile Updated');
     }
 
 
@@ -166,10 +167,10 @@ class UserController extends Controller
                 @method("DELETE")
                 
                     <a  href="{{route("users.edit",$id)}}" title="Edit"  >
-                    <i style="font-size:20px;color:green;background-color:white;">Edit</i>
+                    <i class="fa fa-edit" style="font-size:20px;color:green;background-color:white;">Edit</i>
                 </a>
                 <button type ="submit" id="btn" title="Delete" style="font-size:24px;color:red;background-color:white;border:0px;">
-                    <i style="font-size:12px;color:red;background-color:white;">Delete</i>
+                    <i class="fa fa-trash" style="font-size:18px;color:red;background-color:white;">Delete</i>
                 </button> </form>')
                 ->rawColumns(['action'])
                 ->addIndexColumn()
@@ -199,6 +200,31 @@ class UserController extends Controller
         ]);
         $user = User::find($request->id);
         $user->update($request->only('name', 'email'));
-        return redirect()->route('users.index')->withSuccess('sucess', 'User updated successfully.');
+        return redirect()->route('users.index')->with('success', 'User updated successfull.');
+    }
+
+
+
+    //add user 
+
+    public function adduser(){
+        return view('auth.add-user');
+    }
+
+    public function add_user(Request $request){
+      //  dd($request->all());
+        $name= $request->name;
+        $email= $request->email;
+        $password= $request->password;
+
+        $user= new User();
+        $user->name= $name;
+        $user->email = $email;
+        $user->password= $password;
+        $user->save();
+
+        return redirect()->back()->with('success','User added successfully');
+
+
     }
 }

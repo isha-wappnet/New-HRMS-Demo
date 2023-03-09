@@ -8,10 +8,7 @@
     <meta name="description" content="" />
     <meta name="author" content="" />
     <link rel="icon" type="image/png" sizes="16x16" href="../plugins/images/favicon.png" />
-    {{-- <title>Elite Admin - is a responsive admin template</title> --}}
-
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.0.1/css/toastr.css" rel="stylesheet" />
-
+   
     <script src="//cdnjs.cloudflare.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery-validate/1.19.0/jquery.validate.min.js"></script>
     <script src="//maxcdn.bootstrapcdn.com/bootstrap/4.1.1/js/bootstrap.min.js"></script>
@@ -68,18 +65,16 @@
     <!-- Bootstrap Core JavaScript -->
     <script src="{{ asset('assets/bootstrap/dist/js/bootstrap.min.js') }}"></script>
     <!-- Menu Plugin JavaScript -->
-    <script src="assets/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js"></script>
+    <script src="{{asset('assets/plugins/bower_components/sidebar-nav/dist/sidebar-nav.min.js')}}"></script>
     
     <!--slimscroll JavaScript -->
-    <script src="assets/js/jquery.slimscroll.js"></script>
+    <script src="{{asset('assets/js/jquery.slimscroll.js')}}"></script>
     <!--Wave Effects -->
-    <script src="assets/js/waves.js"></script>
+    <script src="{{asset('assets/js/waves.js')}}"></script>
     <!-- Custom Theme JavaScript -->
-    <script src="assets/js/custom.min.js"></script>
+    <script src="{{asset('assets/js/custom.min.js')}}"></script>
     <!--Style Switcher -->
-    <script src="assets/plugins/bower_components/styleswitcher/jQuery.style.switcher.js"></script>
-
-
+    <script src="{{asset('assets/plugins/bower_components/styleswitcher/jQuery.style.switcher.js')}}"></script>
   
 
 </body>

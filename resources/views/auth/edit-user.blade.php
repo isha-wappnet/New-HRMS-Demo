@@ -1,6 +1,12 @@
 @extends('layout.auth')
 @section('content')
     @include('layout.header')
+
+    <head>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
+            integrity="sha512-gOQQLjHRpD3/SEOtalVq50iDn4opLVup2TF8c4QPI3/NmUPNZOk2FG0ihi8oCU/qYEsw4P6nuEZT2lAG0UNYaw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
+    </head>
     <style>
         .cardStyle {
             width: 500px;
@@ -127,20 +133,13 @@
                     <label>New name</label>
                     <input type="hidden" id="id" value="{{ $user->id }}" name="id">
                     <input type="text" id="name" value="{{ $user->name }}" name="name">
-                    {{-- @error('new_name')
-     <span class="text-danger">{{ $message }}</span>
- @enderror --}}
+
                 </div>
 
                 <div class="inputDiv">
                     <label>New Email</label>
                     <input type="email" id="email" value="{{ $user->email }}" name="email">
-                    {{-- @error('new_email')
-   <span class="text-danger">{{ $message }}</span>
-@enderror --}}
                 </div>
-
-
 
                 <div class="buttonWrapper">
                     <button type="submit" class="submitButton pure-button pure-button-primary">
@@ -175,5 +174,18 @@
                     },
                 })
             </script>
+
+            <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+                integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+            <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+                integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
+                crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+            @if (session('success'))
+                <script>
+                    swal("Congrulation!!", "  {!! session('success') !!}", "success", {
+                        button: "OK"
+                    });
+                </script>
+            @endif
             @include('layout.footer')
         @endsection
