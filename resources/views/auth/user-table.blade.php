@@ -9,13 +9,14 @@
         <title>Laravel 9 Server Side Datatables Tutorial</title>
         <meta name="csrf-token" content="{{ csrf_token() }}">
         <link href="//cdn.datatables.net/1.13.2/css/jquery.dataTables.min.css" rel="stylesheet" />
-         <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
-                integrity="sha512-gOQQLjHRpD3/SEOtalVq50iDn4opLVup2TF8c4QPI3/NmUPNZOk2FG0ihi8oCU/qYEsw4P6nuEZT2lAG0UNYaw=="
-                crossorigin="anonymous" referrerpolicy="no-referrer" />
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css"
+            integrity="sha512-gOQQLjHRpD3/SEOtalVq50iDn4opLVup2TF8c4QPI3/NmUPNZOk2FG0ihi8oCU/qYEsw4P6nuEZT2lAG0UNYaw=="
+            crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
 
     </head>
-     <body>
+
+    <body>
         <div>
             <div id="page-wrapper">
                 <div class="container-fluid">
@@ -24,10 +25,10 @@
                             <h4 class="page-title">Data Table</h4>
                         </div>
                         <div class="col-lg-9 col-sm-8 col-md-8 col-xs-12">
-                            <a href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820"
+                            {{-- <a href="https://themeforest.net/item/elite-admin-responsive-dashboard-web-app-kit-/16750820"
                                 target="_blank"
                                 class="btn btn-danger pull-right m-l-20 btn-rounded btn-outline hidden-xs hidden-sm waves-effect waves-light">Buy
-                                Now</a>
+                                Now</a> --}}
                             <ol class="breadcrumb">
                                 <li><a href="#">Dashboard</a></li>
                                 <li><a href="#">Table</a></li>
@@ -38,7 +39,8 @@
                     </div>
                     <div style="margin-right:5%; float:right;">
                         @role('admin')
-                            <a href="{{ url('adduser') }}"style="font-size:18px" background-color="white"  class="fa fa-table">Add User</a>
+                            <a href="{{ url('adduser') }}"style="font-size:18px" background-color="white"
+                                class="fa fa-table">Add User</a>
                         @endrole
                     </div>
                     <table class="table table-bordered user_datatable">
@@ -48,7 +50,7 @@
                                 {{ session('error') }}
                             </div>
                         @endif
-                       <thead>
+                        <thead>
                             <tr>
                                 <th>ID</th>
                                 <th>Name</th>
@@ -64,7 +66,7 @@
         </div>
 
     </body>
-    
+
     <script type="text/javascript">
         jQuery(function($) {
 
@@ -95,17 +97,17 @@
         })
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
-    integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
-    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-@if (session('success'))
-    <script>
-        swal("Congrulation!!", "  {!! session('success') !!}", "success", {
-            button: "OK"
-        });
-    </script>
-@endif
+        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+        integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
+        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+    @if (session('success'))
+        <script>
+            swal("Congrulation!!", "  {!! session('success') !!}", "success", {
+                button: "OK"
+            });
+        </script>
+    @endif
 
     </html>
 

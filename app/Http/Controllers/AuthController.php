@@ -65,7 +65,7 @@ class AuthController extends Controller
             return redirect()->to('login')
                 ->with('error', 'invalid data');
         else {
-            return redirect()->to('dashboard')->with('success', 'Success! Login Successfull');
+            return redirect()->to('dashboard')->with('success', 'Login Successfull');
         }
     }
 

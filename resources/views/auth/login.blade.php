@@ -121,16 +121,16 @@
             },
         })
     </script>
-    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
-        integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
-        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-    @if (session('success'))
-        <script>
-            swal("Congrulation!!", "  {!! session('success') !!}", "success", {
-                button: "OK"
-            });
-        </script>
-    @endif
+   <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+   integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+   integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
+   crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+@if (session('success'))
+   <script>
+       swal("Congrulation!!", "  {!! session('success') !!}", "success", {
+           button: "OK"
+       });
+   </script>
+@endif
 @endsection

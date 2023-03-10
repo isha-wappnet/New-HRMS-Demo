@@ -3,6 +3,7 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
+use App\Http\Controllers\CalanderController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -14,8 +15,8 @@ use App\Http\Controllers\UserController;
 |
 */
 
-// Route::get('/', function () {
-//     return view('auth\add-user');
+// Route::get('holiday', function () {
+//     return view('auth\holiday');
 // });
 
 Route::get('register', [AuthController::class, "loadRegister"]);
@@ -54,5 +55,10 @@ Route::put('update', [UserController::class, "editprofile"])->name('edit')->midd
 
 Route::get("adduser",[UserController::class,'adduser']);
 Route::post('add-user',[UserController::class,"add_user"]);
+
+
+
+Route::get('calander',[CalanderController::class,"show"]);
+Route::post('calander/action', [CalanderController::class, 'action']);
 
 ?>
