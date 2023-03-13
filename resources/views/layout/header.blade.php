@@ -18,24 +18,24 @@
             <ul class="nav navbar-top-links navbar-left hidden-xs">
                 <li><a href="javascript:void(0)" class="open-close hidden-xs waves-effect waves-light"><i
                             class="icon-arrow-left-circle ti-menu"></i></a></li>
-                <li>
+                {{-- <li>
                     <form role="search" class="app-search hidden-xs">
                         <input type="text" placeholder="Search..." class="form-control">
                         <a href=""><i class="fa fa-search"></i></a>
                     </form>
-                </li>
+                {{-- </li> --}}
             </ul>
             <ul class="nav navbar-top-links navbar-right pull-right">
-                <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
-                        href="#"><i class="icon-envelope"></i>
-                        <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
-                    </a>
-                    <ul class="dropdown-menu mailbox animated flipInY">
-                        <li>
-                            <div class="drop-title">You have 4 new messages</div>
+                {{-- <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" --}}
+                        {{-- href="#"> <i class="icon-envelope"></i> --}}
+                        {{-- <div class="notify"><span class="heartbit"></span><span class="point"></span></div> --}}
+                    {{-- </a> --}}
+                    <ul class="#">
+                        {{-- <li> --}}
+                            {{-- <div class="drop-title">You have 4 new messages</div> --}}
                         </li>
-                        <li>
-                            <div class="message-center"> <a href="#">
+                        {{-- <li> --}}
+                            {{-- <div class="message-center"> <a href="#">
                                     <div class="user-img"> <img src="{{ asset('assets//images/users/pawandeep.jpg') }}"
                                             alt="user" class="img-circle"> <span
                                             class="profile-status online pull-right"></span> </div>
@@ -71,15 +71,15 @@
                                         <span class="mail-desc">Just see the my admin!</span> <span class="time">9:02
                                             AM</span>
                                     </div>
-                                </a> </div>
-                        </li>
-                        <li> <a class="text-center" href="javascript:void(0);"> <strong>See all notifications</strong>
-                                <i class="fa fa-angle-right"></i> </a></li>
+                                </a> </div> --}}
+                        {{-- </li> --}}
+                        {{-- <li> <a class="text-center" href="javascript:void(0);"> <strong>See all notifications</strong>
+                                <i class="fa fa-angle-right"></i> </a></li> --}}
                     </ul>
                     <!-- /.dropdown-messages -->
                 </li>
                 <!-- /.dropdown -->
-                <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
+                {{-- <li class="dropdown"> <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown"
                         href="#"><i class="icon-note"></i>
                         <div class="notify"><span class="heartbit"></span><span class="point"></span></div>
                     </a>
@@ -139,10 +139,10 @@
                                     class="fa fa-angle-right"></i> </a> </li>
                     </ul>
                     <!-- /.dropdown-tasks -->
-                </li>
+                </li> --}}
                 <!-- /.dropdown -->
                 <!-- .Megamenu -->
-                <li class="mega-dropdown">
+                {{-- <li class="mega-dropdown">
                     <a class="dropdown-toggle waves-effect waves-light" data-toggle="dropdown" href="#"><span
                             class="hidden-xs">Mega</span> <i class="icon-options-vertical"></i></a>
                     <ul class="dropdown-menu mega-dropdown-menu animated bounceInDown">
@@ -244,11 +244,10 @@
                             </div>
                         </li>
                     </ul>
-                </li>
+                </li>  --}}
                 <!-- /.Megamenu -->
 
-                <li class="right-side-toggle"> <a class="waves-effect waves-light" href="javascript:void(0)"><i
-                            class="ti-settings"></i></a></li>
+                <li><a href="{{ route('logout') }}"><i class="fa fa-power-off"></i> Logout</a></li>
                 <!-- /.dropdown -->
             </ul>
         </div>
@@ -304,9 +303,9 @@
                             <li><a href="#" class="waves-effect"><i class="fa fa-sitemap" data-icon="v"></i>
                                     Department</a></li>
                             <li><a href="#" class="waves-effect"><i class="fa fa-envelope" data-icon="e"></i>
-                                    Email Formet</a></li>
-                            <li><a href="#" class="waves-effect"><i class="fa fa-file-video-o"
-                                        data-icon="2"></i> Holiday</a></li>
+                                    Email Format</a></li>
+                            <li><a href="calander" class="waves-effect"><i class="fa fa-file-video-o"
+                                        data-icon="2"></i> Calander</a></li>
                             <li><a href="#" class="waves-effect"><i class="fa icon-key" data-icon="2"></i>
                                     Role</a></li>
                             <li><a href="#" class="waves-effect"><i class="fa fa-key" data-icon="2"></i>

@@ -11,6 +11,7 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use DataTables;
+use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {

@@ -59,6 +59,6 @@ Route::post('add-user',[UserController::class,"add_user"]);
 
 
 Route::get('calander',[CalanderController::class,"show"]);
-Route::post('calander/action', [CalanderController::class, 'action']);
+// Route::post('calander/action', [CalanderController::class, 'action']);
 
 ?>
