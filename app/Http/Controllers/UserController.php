@@ -1,7 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
-
+use App\Repository\AuthRepository as AuthInterface;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -15,6 +15,18 @@ use Illuminate\Support\Facades\Redirect;
 
 class UserController extends Controller
 {
+
+
+    
+    private $AuthRepository;
+
+    public function __construct(AuthInterface $AuthRepository) 
+    {
+        $this->AuthRepository = $AuthRepository;
+    }
+
+
+
 
     public function loadForgotPassword()
     {
@@ -30,14 +42,13 @@ class UserController extends Controller
 
         $token = Str::random(64);
 
-        DB::table('password_resets')->insert([
-            'email' =>  $req->email,
-            'token' => $token,
-            'created_at' => Carbon::now()
+        // DB::table('password_resets')->insert([
+        //     'email' =>  $req->email,
+        //     'token' => $token,
+        //     'created_at' => Carbon::now()
 
-
-        ]);
-
+        // ]);
+            $this->AuthRepository->forgetpassword($req,$token);
 
         Mail::send('email\sendemail', ['token' => $token], function ($message) use ($req) {
 
@@ -124,9 +135,10 @@ class UserController extends Controller
 
 
         #Update the new Password
-        User::whereId(auth()->user()->id)->update([
-            'password' => Hash::make($request->new_password)
-        ]);
+        // User::whereId(auth()->user()->id)->update([
+        //     'password' => Hash::make($request->new_password)
+        // ]);
+        $this->AuthRepository->updatepassword($request);
 
         return redirect('login')->with('success', 'Password Updated Successfully');
     }

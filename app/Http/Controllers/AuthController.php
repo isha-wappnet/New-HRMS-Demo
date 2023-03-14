@@ -2,6 +2,8 @@
 
 namespace App\Http\Controllers;
 
+// use App\Interface\AuthInterface;
+use App\Repository\AuthRepository as AuthInterface;
 use Illuminate\Http\Request;
 use App\Models\User;
 use Illuminate\Support\Facades\Auth;
@@ -13,9 +15,22 @@ use Illuminate\Support\Str;
 use DataTables;
 
 
+
 class AuthController extends Controller
 {
-    //
+    
+
+    private $AuthRepository;
+
+    public function __construct(AuthInterface $AuthRepository) 
+    {
+        $this->AuthRepository = $AuthRepository;
+    }
+
+
+
+//
+
     public function loadRegister()
     {
         return view('auth\register');
@@ -37,9 +52,12 @@ class AuthController extends Controller
             'cpassword' => 'required|same:password'
         ]);
 
-        $user = User::create($request->all());
+        $user = $request->all();
+        $this->AuthRepository->register($user);
 
-        auth()->login($user);
+        // $user = User::create($request->all());
+
+        // auth()->login($user);
         return redirect('login')->with('success', 'Success! User created');
     }
 
@@ -88,4 +106,3 @@ class AuthController extends Controller
 
 
 }
-?>
