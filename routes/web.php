@@ -15,48 +15,40 @@ use App\Http\Controllers\CalanderController;
 |
 */
 
-// Route::get('holiday', function () {
-//     return view('auth\holiday');
-// });
 
-Route::get('register', [AuthController::class, "loadRegister"]);
-Route::post('register', [AuthController::class, "registerAction"]);
-Route::get('login', [AuthController::class, "loadLogin"]);
-Route::post('dashboard', [AuthController::class, "loginAction"])->name('user');
-Route::get('dashboard', [AuthController::class, "dashboard"]);
-Route::get('logout', [AuthController::class, "performLogout"])->name('logout');
+Route::controller(AuthController::class)->group(function(){
 
+Route::get('register','loadRegister');
+Route::post('register','registerAction');
+Route::get('login','loadLogin');
+Route::post('dashboard','loginAction')->name('user');
+Route::get('dashboard','dashboard');
+Route::get('logout','performLogout')->name('logout');
 
+});
 
-Route::get('forgotpassword', [UserController::class, "loadForgotPassword"])->name('forgotpassword');
-Route::post('forgotPasswordValidate.check', [UserController::class, 'forgotPasswordValidate'])->name('forgotPasswordValidate');
+Route::controller(UserController::class)->group(function(){
 
+Route::get('forgotpassword','loadForgotPassword')->name('forgotpassword');
+Route::post('forgotPasswordValidate.check','forgotPasswordValidate')->name('forgotPasswordValidate');
 //route for opening reset page after getting link in mail------------------------
-
-Route::get('/resetpassword/{token}', [UserController::class, "resetpassword"])->name('resetpassword');
-Route::post('reset', [UserController::class, "submitresetpassword"])->name('submit');
-Route::get('changepassword', [UserController::class, "changepassword"]);
-Route::POST('changepassword', [UserController::class, "submitchangepassword"])->name('change');
-
+Route::get('/resetpassword/{token}','resetpassword')->name('resetpassword');
+Route::post('reset','submitresetpassword')->name('submit');
+Route::get('changepassword','changepassword');
+Route::POST('changepassword','submitchangepassword')->name('change');
 //update user profile-------------------------------------------------
-
-Route::get('userprofile', [UserController::class, "userprofile"]);
-Route::post('userprofile', [UserController::class, "profileUpdate"])->name('update');
-
-
+Route::get('userprofile','userprofile');
+Route::post('userprofile','profileUpdate')->name('update');
 //Data table routes---------------------------------------------------
-
-Route::get('users', [UserController::class, 'index'])->name('users.index');
-Route::delete('/delete/{id}', [UserController::class, "delete"])->name('users.destroy')->middleware(['auth','role:admin']);
-Route::get('/edit/{id}', [UserController::class, "edit"])->name('users.edit')->middleware(['auth','role:admin']);
-Route::put('update', [UserController::class, "editprofile"])->name('edit')->middleware(['auth','role:admin']);
-
+Route::get('users','index')->name('users.index');
+Route::delete('/delete/{id}','delete')->name('users.destroy')->middleware(['auth','role:admin']);
+Route::get('/edit/{id}','edit')->name('users.edit')->middleware(['auth','role:admin']);
+Route::put('update','editprofile')->name('edit')->middleware(['auth','role:admin']);
 //add user --------------------------------------------------------
+Route::get("adduser",'adduser');
+Route::post('add-user','add_user');
 
-Route::get("adduser",[UserController::class,'adduser']);
-Route::post('add-user',[UserController::class,"add_user"]);
-
-
+});
 
 Route::get('calander',[CalanderController::class,"show"]);
 // Route::post('calander/action', [CalanderController::class, 'action']);

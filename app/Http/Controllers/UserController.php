@@ -1,6 +1,7 @@
 <?php
 
 namespace App\Http\Controllers;
+
 use App\Repository\AuthRepository as AuthInterface;
 use Illuminate\Http\Request;
 use App\Models\User;
@@ -11,29 +12,30 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use DataTables;
+use Illuminate\Http\RedirectResponse;
+use GuzzleHttp\Psr7\Response;
+use Illuminate\Contracts\View\View;
 use Illuminate\Support\Facades\Redirect;
+use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsRedirected;
 
 class UserController extends Controller
 {
 
 
-    
+
     private $AuthRepository;
 
-    public function __construct(AuthInterface $AuthRepository) 
+    public function __construct(AuthInterface $AuthRepository)
     {
         $this->AuthRepository = $AuthRepository;
     }
 
-
-
-
-    public function loadForgotPassword()
+    public function loadForgotPassword(): View
     {
         return view('auth.forgotpassword');
     }
 
-    public function forgotPasswordValidate(Request $req)
+    public function forgotPasswordValidate(Request $req): RedirectResponse
     {
         $valid = $req->validate([
             'email' => 'required|email|exists:users',
@@ -48,7 +50,7 @@ class UserController extends Controller
         //     'created_at' => Carbon::now()
 
         // ]);
-            $this->AuthRepository->forgetpassword($req,$token);
+        $this->AuthRepository->forgetpassword($req, $token);
 
         Mail::send('email\sendemail', ['token' => $token], function ($message) use ($req) {
 
@@ -66,9 +68,9 @@ class UserController extends Controller
 
     //reset password ----------------------------------------------------------------------------------//
 
-    public function submitresetpassword(Request $request)
+    public function submitresetpassword(Request $request): RedirectResponse
     {
-        $request->validate([
+        $updatepassword = $request->validate([
             'email' => 'required|email|exists:users',
             'password' =>   [
                 'required',
@@ -81,35 +83,35 @@ class UserController extends Controller
             ],
             'cpassword' => 'required|same:password'
         ]);
+        //  dd($updatepassword);
+        // $updatepassword = DB::table('password_resets')->where([
 
-        $updatepassword = DB::table('password_resets')->where([
+        //     'email' => $request->email,
+        //     'token' => $request->token
+        // ])
+        //     ->first();
+        $this->AuthRepository->resetpassword($request);
+        // if (!$updatepassword) {
 
-            'email' => $request->email,
-            'token' => $request->token
-        ])
-            ->first();
+        //     return back()->withInput()->with('error', 'Reset link is expired!');
+        // }
+        // $user  = User::where('email', $request->email)
+        //     ->update(['password' => Hash::make($request->password)]);
 
-        if (!$updatepassword) {
-
-            return back()->withInput()->with('error', 'Reset link is expired!');
-        }
-        $user  = User::where('email', $request->email)
-            ->update(['password' => Hash::make($request->password)]);
-
-        DB::table('password_resets')->where(['email' => $request->email])->delete();
+        // DB::table('password_resets')->where(['email' => $request->email])->delete();
         return redirect('login')->with('success', 'your password has been successfully changed');
     }
 
-    public function changepassword()
+    public function changepassword(): View
     {
 
         return view('auth.change-password');
     }
 
-    
+
     //change password function------------------------------------------------------------
 
-    public function submitchangepassword(Request $request)
+    public function submitchangepassword(Request $request): RedirectResponse
     {
 
 
@@ -123,7 +125,7 @@ class UserController extends Controller
                 'regex:/[A-Z]/',      // must contain at least one uppercase letter
                 'regex:/[0-9]/',      // must contain at least one digit
                 'regex:/[@$!%*#?&]/', // must contain a special character
-            'confirmPassword'=>'required',
+                'confirmPassword' => 'required',
             ],
         ]);
 
@@ -145,13 +147,13 @@ class UserController extends Controller
 
 
 
-    public function userprofile()
+    public function userprofile(): View
     {
 
         return view('auth.update-userprofile');
     }
 
-    public function profileUpdate(Request $request)
+    public function profileUpdate(Request $request): RedirectResponse
     {
         //validation rules
 
@@ -159,10 +161,12 @@ class UserController extends Controller
             'name' => 'required|min:4|string|max:255',
             'email' => 'required|email|string|max:255'
         ]);
-        $user = Auth::user();
-        $user->name = $request['name'];
-        $user->email = $request['email'];
-        $user->save();
+
+        $this->AuthRepository->updateprofile($request);
+        // $user = Auth::user();
+        // $user->name = $request['name'];
+        // $user->email = $request['email'];
+        // $user->save();
         return back()->with('success', 'Profile Updated');
     }
 
@@ -170,10 +174,13 @@ class UserController extends Controller
 
     ///Data table----------------
 
-    public function index(Request $request)
+    public function index(Request $request): RedirectResponse
     {
         if ($request->ajax()) {
-            $data = User::all();
+
+            //  $data = User::all();
+            $data =  $this->AuthRepository->datatable($request);
+
             return Datatables::of($data)->addIndexColumn()
                 ->addColumn("action", '<form action="{{route("users.destroy",$id)}}" method="POST">
                 @csrf
@@ -191,19 +198,24 @@ class UserController extends Controller
         }
         return view('auth.user-table');
     }
-    public function delete($id)
+    public function delete($id) 
     {
+        $this->AuthRepository->destroy($id);
 
-        User::find($id)->delete();
+        // User::find($id)->delete();
+
         return back()->with('success', "Data deleted successfully");
     }
     public function edit($id)
     {
-        $user = User::find($id);
+        // $user = User::find($id);
+
+        $user = $this->AuthRepository->editshow($id);
+
         return view('auth.edit-user', compact('user'));
     }
 
-    public function editprofile(Request $request)
+    public function editprofile(Request $request) : RedirectResponse
     {
 
         $request->validate([
@@ -211,8 +223,9 @@ class UserController extends Controller
             'name' => 'required|min:4|string|max:255',
             'email' => 'required|email|string|max:255'
         ]);
-        $user = User::find($request->id);
-        $user->update($request->only('name', 'email'));
+        $this->AuthRepository->editaction($request);
+        // $user = User::find($request->id);
+        // $user->update($request->only('name', 'email'));
         return redirect()->route('users.index')->with('success', 'User updated successfull.');
     }
 
@@ -220,24 +233,24 @@ class UserController extends Controller
 
     //add user 
 
-    public function adduser(){
+    public function adduser() : View
+    {
         return view('auth.add-user');
     }
 
-    public function add_user(Request $request){
-      //  dd($request->all());
-        $name= $request->name;
-        $email= $request->email;
-        $password= $request->password;
+    public function add_user(Request $request) : RedirectResponse
+    {
+        //  dd($request->all());
+        // $name= $request->name;
+        // $email= $request->email;
+        // $password= $request->password;
 
-        $user= new User();
-        $user->name= $name;
-        $user->email = $email;
-        $user->password= $password;
-        $user->save();
-
-        return redirect()->back()->with('success','User added successfully');
-
-
+        // $user= new User();
+        // $user->name= $name;
+        // $user->email = $email;
+        // $user->password= $password;
+        // $user->save();
+        $this->AuthRepository->adduser($request);
+        return redirect()->back()->with('success', 'User added successfully');
     }
 }

@@ -13,29 +13,28 @@ use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
 use DataTables;
-
-
+use Illuminate\Contracts\View\View;
+use Illuminate\Http\RedirectResponse;
+use Illuminate\Support\Facades\Redirect;
 
 class AuthController extends Controller
 {
-    
+
 
     private $AuthRepository;
 
-    public function __construct(AuthInterface $AuthRepository) 
+    public function __construct(AuthInterface $AuthRepository)
     {
         $this->AuthRepository = $AuthRepository;
     }
 
+    //
 
-
-//
-
-    public function loadRegister()
+    public function loadRegister(): View
     {
         return view('auth\register');
     }
-    public function registerAction(Request $request)
+    public function registerAction(Request $request): RedirectResponse
     {
         $user = $request->validate([
             'name' => 'required',
@@ -62,13 +61,13 @@ class AuthController extends Controller
     }
 
 
-    public function loadLogin()
+    public function loadLogin(): view
     {
         return view('auth\login');
     }
 
 
-    public function loginAction(Request $request)
+    public function loginAction(Request $request): RedirectResponse
     {
 
         $request->validate([
@@ -87,7 +86,7 @@ class AuthController extends Controller
         }
     }
 
-    public function dashboard()
+    public function dashboard(): View
     {
         if (Auth::check()) {
             return view('auth.dashboard');
@@ -96,13 +95,11 @@ class AuthController extends Controller
         }
     }
 
-    public function performLogout()
+    public function performLogout(): View
     {
 
         Auth::logout();
 
         return view('auth.login');
     }
-
-
 }
