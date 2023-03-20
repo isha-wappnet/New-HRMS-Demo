@@ -4,6 +4,7 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalanderController;
+use App\Http\Controllers\LeavesController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -47,10 +48,18 @@ Route::put('update','editprofile')->name('edit')->middleware(['auth','role:admin
 //add user --------------------------------------------------------
 Route::get("adduser",'adduser');
 Route::post('add-user','add_user');
+//Route::get('leave',"showleave");
 
 });
 
-Route::get('calander',[CalanderController::class,"show"]);
-// Route::post('calander/action', [CalanderController::class, 'action']);
+
+Route::controller(LeavesController::class)->group(function(){
+
+Route::get('leave','index')->name('leaves.index');
+Route::get('leaves/list','showLeaves')->name('leaves.list');
+Route::get('/leaves/create','create')->name('leaves.create');
+Route::post('/leave-request','store')->middleware('auth')->name('leave-request.store');
+Route::delete('/delete/{id}','reject')->name('leave.destroy')->middleware(['auth','role:admin']);
+});
 
 ?>

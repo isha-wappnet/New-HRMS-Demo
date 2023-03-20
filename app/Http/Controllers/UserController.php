@@ -145,8 +145,6 @@ class UserController extends Controller
         return redirect('login')->with('success', 'Password Updated Successfully');
     }
 
-
-
     public function userprofile(): View
     {
 
@@ -170,11 +168,9 @@ class UserController extends Controller
         return back()->with('success', 'Profile Updated');
     }
 
-
-
     ///Data table----------------
 
-    public function index(Request $request): RedirectResponse
+    public function index(Request $request)
     {
         if ($request->ajax()) {
 
@@ -189,7 +185,7 @@ class UserController extends Controller
                     <a  href="{{route("users.edit",$id)}}" title="Edit"  >
                     <i class="fa fa-edit" style="font-size:20px;color:green;background-color:white;">Edit</i>
                 </a>
-                <button type ="submit" id="btn" title="Delete" style="font-size:24px;color:red;background-color:white;border:0px;">
+                <button type ="submit" id="btn"  title="Delete" style="font-size:24px;color:red;background-color:white;border:0px;">
                     <i class="fa fa-trash" style="font-size:18px;color:red;background-color:white;">Delete</i>
                 </button> </form>')
                 ->rawColumns(['action'])
@@ -233,7 +229,7 @@ class UserController extends Controller
 
     //add user 
 
-    public function adduser() : View
+    public function adduser() : view 
     {
         return view('auth.add-user');
     }
@@ -253,4 +249,6 @@ class UserController extends Controller
         $this->AuthRepository->adduser($request);
         return redirect()->back()->with('success', 'User added successfully');
     }
+
+      
 }

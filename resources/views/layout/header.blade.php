@@ -298,14 +298,14 @@
                         <ul class="dropdown-menu animated flipInY">
                             <li><a href="users"><i class="linea-icon linea-basic fa-fw" data-icon="!"></i>
                                     Users</a></li>
-                            <li><a href="#"><i class="fa fa fa-fort-awesome" data-icon="v"></i> Company</a>
-                            </li>
+                            <li><a href="{{route('leaves.index')}}"><i class="fa fa fa-fort-awesome" data-icon="v"></i> Show leaves</a>
+                            </li> 
                             <li><a href="#" class="waves-effect"><i class="fa fa-sitemap" data-icon="v"></i>
                                     Department</a></li>
                             <li><a href="#" class="waves-effect"><i class="fa fa-envelope" data-icon="e"></i>
                                     Email Format</a></li>
-                            <li><a href="calander" class="waves-effect"><i class="fa fa-file-video-o"
-                                        data-icon="2"></i> Calander</a></li>
+                            <li><a href="{{ route('leaves.create') }}" class="waves-effect"><i class="fa fa-file-video-o"
+                                        data-icon="2"></i> Add leave</a></li>
                             <li><a href="#" class="waves-effect"><i class="fa icon-key" data-icon="2"></i>
                                     Role</a></li>
                             <li><a href="#" class="waves-effect"><i class="fa fa-key" data-icon="2"></i>

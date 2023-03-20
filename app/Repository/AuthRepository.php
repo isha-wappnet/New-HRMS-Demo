@@ -41,6 +41,7 @@ class AuthRepository implements AuthInterface
         $user->name = $request['name'];
         $user->email = $request['email'];
         $user->save();
+      
     }
     public function resetpassword($request)
     {

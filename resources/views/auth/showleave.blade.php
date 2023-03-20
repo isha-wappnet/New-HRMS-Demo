@@ -1,3 +1,4 @@
+
 @extends('layout.auth')
 
 @section('content')
@@ -28,18 +29,17 @@
                             <ol class="breadcrumb">
                                 <li><a href="#">Dashboard</a></li>
                                 <li><a href="#">Table</a></li>
-                                <li class="active">Data Table</li>
+                                <li class="active">Leave Table</li>
                             </ol>
                         </div>
                         <!-- /.col-lg-12 -->
                     </div>
                     <div style="margin-right:5%; float:right;">
-                        @role('admin')
-                            <a href="{{ url('adduser') }}"style="font-size:18px" background-color="white"
-                                class="fa fa-table">Add User</a>
-                        @endrole
+                        <a href="{{ route('leaves.create') }}"style="font-size:18px" background-color="white"
+                            class="fa fa-table">Add leave</a>
+
                     </div>
-                    <table class="table table-bordered user_datatable">
+                    <table id="leaves-table" class="table table-bordered">
                         @if (session('error'))
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -49,13 +49,38 @@
                         <thead>
                             <tr>
                                 <th>ID</th>
-                                <th>Name</th>
-                                <th>Email</th>
-                                <th width="150px">Action</th>
+                                <th>User Id</th>
+                                <th>Start Date</th>
+                                <th>End Date</th>
+                                <th>Reason</th>
+                                <th >Status</th>
+                                <th>Action</th>
+                                
+                                {{-- <th width = "50px"><button type="button" name ="approved">Approved</button></th> --}}
+
                             </tr>
                         </thead>
                         <tbody>
                         </tbody>
+                        {{-- @if(!empty($leaves))
+
+                            
+                       
+                        @foreach ($leaves as $leave)          
+              <tr>
+                <td>{{$leave->id}}</td>
+                <td>{{$leave->user_id}}</td>
+                <td>{{$leave->start_date}}</td>
+                <td>{{$leave->end_date}}</td>
+                <td>{{$leave->status}}</td>
+                <td>{{$leave->action}}</td>
+                <td>
+                    <a href="#" class="btn btn-success">Approve</a>
+                </td>
+                <td>
+                    <a href="#" class="btn btn-danger">Decline</a>
+                    @endforeach
+                    @endif --}}
                     </table>
                 </div>
             </div>
@@ -63,34 +88,44 @@
 
     </body>
 
+    </html>
     <script type="text/javascript">
         jQuery(function($) {
-
-            var table = $('.user_datatable').DataTable({
+            $('#leaves-table').DataTable({
                 processing: true,
                 serverSide: true,
-                ajax: "{{ route('users.index') }}",
+                ajax: "{{ route('leaves.list') }}",
                 columns: [{
                         data: 'id',
                         name: 'id'
                     },
                     {
-                        data: 'name',
-                        name: 'name'
+                        data: 'user_id',
+                        name: 'user_id'
                     },
                     {
-                        data: 'email',
-                        name: 'email'
+                        data: 'start_date',
+                        name: 'start_date'
+                    },
+                    {
+                        data: 'end_date',
+                        name: 'end_date'
+                    },
+                    {
+                        data: 'reason',
+                        name: 'reason'
+                    },
+                    {
+                        data: 'status',
+                        name: 'status'
                     },
                     {
                         data: 'action',
-                        name: 'action',
-                        orderable: false,
-                        searchable: false
-                    },
+                        name: 'action'
+                    }
                 ]
             });
-        })
+        });
     </script>
     <script src="https://code.jquery.com/jquery-3.6.4.min.js"
         integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
@@ -104,8 +139,5 @@
             });
         </script>
     @endif
-
-    
-    </html>
     @include('layout.footer')
 @endsection
