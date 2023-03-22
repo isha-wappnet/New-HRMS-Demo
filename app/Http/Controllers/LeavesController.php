@@ -4,7 +4,7 @@ namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
 use App\Models\Leave;
-use DataTables;
+ use Yajra\DataTables\Facades\DataTables;
 
 class LeavesController extends Controller
 {
@@ -48,25 +48,40 @@ class LeavesController extends Controller
         if ($request->ajax()) {
             $data = Leave::all();
             return Datatables::of($data)->addIndexColumn()
-                ->addColumn("action", '
-                @method("DELETE")
-                
-                    <a  href="#" title="Approved"  >
-                    <i  class="fa fa-check"" style="font: size 13px;px;color:green ">Approved</i>
-                
-                </a>
-                <button type ="submit" id="btn" title="Reject" style="font-size:24px;color:red;background-color:white;border:0px;">
-                    <i class="fa fa-close"style="font-size:13px;color:red;background-color:white;">Rejected</i>
-                </button>')       
+                ->addColumn("action", function ($row) {
+                    return '<form method="POST" action="'. route("leaves.update", $row->id) .'">
+                    '. csrf_field() .'
+                    '. method_field("PUT") .'
+                    <input type="hidden" name="status" value="approved">
+                    <button type="submit" class="fa fa-check" style="font-size:13px;color:green;background-color:white;">Approve</button>
+                </form>
+                <form method="POST" action="'. route("leaves.update", $row->id) .'">
+                    '. csrf_field() .'
+                    '. method_field("PUT") .'
+                    <input type="hidden" name="status" value="rejected">
+                    <button type="submit" class="fa fa-close" style="font-size:13px;color:red;background-color:white;">Reject</button>
+                </form>';
+            })
                 ->rawColumns(['action'])
                 ->addIndexColumn()
                 ->make(true);
         }
         return view('auth.showleave');
     }
-    public function reject($id){
+    public function updateLeaveStatus(Request $request, $id)
+    {
+        $status = $request->input('status');
+        
+        $leave = Leave::findOrFail($id);
+        
+        if ($status == 'approved') {
+            $leave->status = 'approved';
+            $leave->save();
+        } else if ($status == 'rejected') {
+            $leave->status = 'rejected';
+            $leave->save();
+        }
 
-        Leave::find($id)->delete();
-        return back()->with('success', "Data deleted successfully");
+        return redirect()->back()->with('success', 'Leave request status has been updated.');
     }
 }

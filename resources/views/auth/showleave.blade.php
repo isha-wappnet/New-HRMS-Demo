@@ -54,7 +54,7 @@
                                 <th>End Date</th>
                                 <th>Reason</th>
                                 <th >Status</th>
-                                <th>Action</th>
+                              @role('admin')  <th>Action</th> @endrole
                                 
                                 {{-- <th width = "50px"><button type="button" name ="approved">Approved</button></th> --}}
 
@@ -119,10 +119,10 @@
                         data: 'status',
                         name: 'status'
                     },
-                    {
+                 @role('admin')   {
                         data: 'action',
                         name: 'action'
-                    }
+                    }@endrole
                 ]
             });
         });

@@ -59,7 +59,7 @@ Route::get('leave','index')->name('leaves.index');
 Route::get('leaves/list','showLeaves')->name('leaves.list');
 Route::get('/leaves/create','create')->name('leaves.create');
 Route::post('/leave-request','store')->middleware('auth')->name('leave-request.store');
-Route::delete('/delete/{id}','reject')->name('leave.destroy')->middleware(['auth','role:admin']);
+Route::put('/leaves/{id}', 'updateLeaveStatus')->name('leaves.update');
 });
 
 ?>
