@@ -3,6 +3,15 @@
 
 @section('content')
     @include('layout.header')
+ 
+ 
+    <style>
+        table.dataTable td {
+      max-width: 200px; / Change this to the desired maximum width /
+      white-space: normal;
+      word-wrap: break-word;
+    }
+    </style>
     <!DOCTYPE html>
     <html>
 
@@ -52,9 +61,10 @@
                                 <th>User Id</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th>Reason</th>
+                                <th >Reason</th>
                                 <th >Status</th>
-                              @role('admin')  <th>Action</th> @endrole
+                                <th>Remaing Leaves</th>
+                              @role('admin')  <th width = "150px">Action</th> @endrole
                                 
                                 {{-- <th width = "50px"><button type="button" name ="approved">Approved</button></th> --}}
 
@@ -62,25 +72,6 @@
                         </thead>
                         <tbody>
                         </tbody>
-                        {{-- @if(!empty($leaves))
-
-                            
-                       
-                        @foreach ($leaves as $leave)          
-              <tr>
-                <td>{{$leave->id}}</td>
-                <td>{{$leave->user_id}}</td>
-                <td>{{$leave->start_date}}</td>
-                <td>{{$leave->end_date}}</td>
-                <td>{{$leave->status}}</td>
-                <td>{{$leave->action}}</td>
-                <td>
-                    <a href="#" class="btn btn-success">Approve</a>
-                </td>
-                <td>
-                    <a href="#" class="btn btn-danger">Decline</a>
-                    @endforeach
-                    @endif --}}
                     </table>
                 </div>
             </div>
@@ -118,6 +109,10 @@
                     {
                         data: 'status',
                         name: 'status'
+                    },
+                    {
+                        data: 'Remaining_leaves',
+                        name: 'Remaing Leaves'
                     },
                  @role('admin')   {
                         data: 'action',
