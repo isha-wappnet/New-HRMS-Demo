@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('leaves', function (Blueprint $table) {
-         $table->integer('Remaining_leaves')->default(20);
+         $table->integer('remaining_leaves')->default(20);
         });
     }
 

@@ -111,7 +111,7 @@
                         name: 'status'
                     },
                     {
-                        data: 'Remaining_leaves',
+                        data: 'remaining_leaves',
                         name: 'Remaing Leaves'
                     },
                  @role('admin')   {

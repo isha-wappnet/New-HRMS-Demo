@@ -35,12 +35,12 @@ class UserController extends Controller
         return view('auth.forgotpassword');
     }
 
-    public function forgotPasswordValidate(Request $req): RedirectResponse
-    {
+    public function forgotPasswordValidate(Request $req)
+    { 
         $valid = $req->validate([
             'email' => 'required|email|exists:users',
         ]);
-        // dd($valid);
+     //   dd($req);
 
         $token = Str::random(64);
 

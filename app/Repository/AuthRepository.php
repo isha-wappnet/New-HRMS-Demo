@@ -19,15 +19,15 @@ class AuthRepository implements AuthInterface
         auth()->login($user);
     }
     public function forgetpassword($request, $token)
-    {
-
-
+    {       
+        
         DB::table('password_resets')->insert([
             'email' =>  $request->email,
             'token' => $token,
             'created_at' => Carbon::now()
 
         ]);
+        // dd($request);
     }
     public function updatepassword($request)
     {
