@@ -26,9 +26,12 @@ class LeavesController extends Controller
 
         $leaveRequest = new Leave();
         $leaveRequest->user_id = auth()->user()->id;
+        $leaveRequest->name = auth()->user()->name;
+        // dd($leaveRequest);
         $leaveRequest->start_date = $request->start_date;
         $leaveRequest->end_date = $request->end_date;
         $leaveRequest->reason = $request->reason;
+        $leaveRequest->total_days = $request->total_days;
         $leaveRequest->save();
 
         return redirect()->route('leaves.index')->with('success', 'Leave request submitted.');
@@ -50,13 +53,13 @@ class LeavesController extends Controller
                     ' . csrf_field() . '
                     ' . method_field("PUT") . '
                     <input type="hidden" name="status" value="approved">
-                    <button type="submit" class="fa fa-check" style="font-size:18px;color:green;background-color:white;">Approve</button>
+                    <button type="submit" class="fa fa-check" style="font-size:18px;color:green;">Approve</button>
                 </form>
                 <form method="POST" action="' . route("leaves.update", $row->id) . '">
                     ' . csrf_field() . '
                     ' . method_field("PUT") . '
                     <input type="hidden" name="status" value="rejected">
-                    <button type="submit" class="fa fa-close" style="font-size:18px;color:red;background-color:white;">Reject</button>
+                    <button type="submit" class="fa fa-close" style="font-size:18px;color:red;">Reject</button>
                 </form>';
                 })
                 ->rawColumns(['action'])
@@ -66,36 +69,39 @@ class LeavesController extends Controller
         return view('auth.showleave');
     }
     public function updateLeaveStatus(Request $request, $id)
-    {
-        $status = $request->input('status');
-        $leave = Leave::findOrFail($id);
+{
+    $status = $request->input('status');
+    $leave = Leave::findOrFail($id);
+    $name = $leave->name; 
 
-        $start_date = Carbon::createFromFormat('Y-m-d', $leave->start_date);
-        $end_date = Carbon::createFromFormat('Y-m-d', $leave->end_date);
+    $start_date = Carbon::createFromFormat('Y-m-d', $leave->start_date);
+    $end_date = Carbon::createFromFormat('Y-m-d', $leave->end_date);
+    $total_days = $start_date->diffInDays($end_date);
 
-        $total_days = $start_date->diffInDays($end_date);
-        if ($status == 'approved') {
-            $leave->status = 'approved';
-            $remaining_leaves = (int)$leave->remaining_leaves - (int)$total_days;
+    if ($status == 'approved') {
+        $leave->status = 'approved';
 
-            // Fetch the latest remaining leaves from the leaves table
-            $leaveRecord = DB::table('leaves')->where('user_id', $leave->user_id)
-                ->orderBy('id', 'desc')
-                ->first();
-            if ($leaveRecord) {
-                $latest_remaining_leaves = $leaveRecord->remaining_leaves;
-            } else {
-                $latest_remaining_leaves = 0;
-            }
+        // Fetch the latest remaining leaves from the leaves table
+        $leaveRecord = DB::table('leaves')
+            ->where('user_id', $leave->user_id)
+            ->orderBy('id', 'desc')
+            ->first();
 
-            $remaining_leaves = max(0, $latest_remaining_leaves - (int)$total_days);
-
-            $leave->remaining_leaves = $remaining_leaves;
-            $leave->save();
-        } else if ($status == 'rejected') {
-            $leave->status = 'rejected';
-            $leave->save();
+        if ($leaveRecord) {
+            $remaining_leaves = $leaveRecord->remaining_leaves;
+        } else {
+            $remaining_leaves = 0;
         }
+
+        $remaining_leaves = max(0, $remaining_leaves - $total_days);
+
+        $leave->remaining_leaves = $remaining_leaves;
+        $leave->save();
+    } else if ($status == 'rejected') {
+        $leave->status = 'rejected';
+        $leave->save();
+    }
+        
         return redirect()->back()->with('success', 'Leave request status has been updated.');
     }
 }

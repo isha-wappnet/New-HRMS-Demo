@@ -16,8 +16,10 @@ return new class extends Migration
         Schema::create('leaves', function (Blueprint $table) {
             $table->id();
             $table->foreignId('user_id')->constrained()->onDelete('cascade');
+            $table->string('name');
             $table->date('start_date');
             $table->date('end_date');
+            $table->integer('total_days');
             $table->text('reason');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
             $table->timestamps();

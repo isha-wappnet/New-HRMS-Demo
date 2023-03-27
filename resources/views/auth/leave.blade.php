@@ -141,13 +141,17 @@
                                 <label for="end_date">End Date</label>
                                 <input type="date" name="end_date" id="end_date" placeholder="select end date">
                             </div>
-
+                            <div class="inputDiv">
+                                <label for="total days">Total Days</label>
+                                <input type="number" name="total_days" id="total_days" placeholder="Enter total days">
+                            </div>
                             <div class="inputDiv">
                                 <label for="reason">Reason</label>
                                 <textarea name="reason" id="reason" placeholder="Enter reason" rows="5" required></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
+                            <a href="{{ url('dashboard') }}" class="btn btn-primary"> <span>Back</span></a>
                         </form>
                     </div>
                 </div>

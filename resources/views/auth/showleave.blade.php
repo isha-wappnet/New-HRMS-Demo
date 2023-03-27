@@ -1,16 +1,18 @@
-
 @extends('layout.auth')
 
 @section('content')
     @include('layout.header')
- 
- 
+
+
     <style>
         table.dataTable td {
-      max-width: 200px; / Change this to the desired maximum width /
-      white-space: normal;
-      word-wrap: break-word;
-    }
+            max-width: 200px;/ Change this to the desired maximum width / white-space: normal;
+            word-wrap: break-word;
+        }
+
+        .table {
+            background-color: #fff;
+        }
     </style>
     <!DOCTYPE html>
     <html>
@@ -44,11 +46,10 @@
                         <!-- /.col-lg-12 -->
                     </div>
                     <div style="margin-right:5%; float:right;">
-                        <a href="{{ route('leaves.create') }}"style="font-size:18px" background-color="white"
-                            class="fa fa-table">Add leave</a>
+                        <a href="{{ route('leaves.create') }}"style="font-size:18px " class="fa fa-plus">Add leave</a>
 
                     </div>
-                    <table id="leaves-table" class="table table-bordered">
+                    <table id="leaves-table" class="table table-bordered" class="table">
                         @if (session('error'))
                             <div class="alert alert-danger alert-dismissable">
                                 <button type="button" class="close" data-dismiss="alert" aria-hidden="true">×</button>
@@ -59,13 +60,17 @@
                             <tr>
                                 <th>ID</th>
                                 <th>User Id</th>
+                                <th>Name</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
-                                <th >Reason</th>
-                                <th >Status</th>
+                                <th>Total Days</th>
+                                <th>Reason</th>
+                                <th>Status</th>
                                 <th>Remaing Leaves</th>
-                              @role('admin')  <th width = "150px">Action</th> @endrole
-                                
+                                @role('admin')
+                                    <th width="150px">Action</th>
+                                @endrole
+
                                 {{-- <th width = "50px"><button type="button" name ="approved">Approved</button></th> --}}
 
                             </tr>
@@ -95,12 +100,20 @@
                         name: 'user_id'
                     },
                     {
+                        data: 'name',
+                        name: 'name'
+                    },
+                    {
                         data: 'start_date',
                         name: 'start_date'
                     },
                     {
                         data: 'end_date',
                         name: 'end_date'
+                    },
+                    {
+                        data: 'total_days',
+                        name: 'total_days'
                     },
                     {
                         data: 'reason',
@@ -114,10 +127,12 @@
                         data: 'remaining_leaves',
                         name: 'Remaing Leaves'
                     },
-                 @role('admin')   {
-                        data: 'action',
-                        name: 'action'
-                    }@endrole
+                    @role('admin')
+                        {
+                            data: 'action',
+                            name: 'action'
+                        }
+                    @endrole
                 ]
             });
         });
