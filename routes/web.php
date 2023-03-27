@@ -52,7 +52,7 @@ Route::post('add-user','add_user');
 
 });
 
-
+//leaves
 Route::controller(LeavesController::class)->group(function(){
 
 Route::get('leave','index')->name('leaves.index');

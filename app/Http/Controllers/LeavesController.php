@@ -68,6 +68,7 @@ class LeavesController extends Controller
         }
         return view('auth.showleave');
     }
+    //update lravev method
     public function updateLeaveStatus(Request $request, $id)
 {
     $status = $request->input('status');
