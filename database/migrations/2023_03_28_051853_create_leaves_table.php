@@ -22,8 +22,8 @@ return new class extends Migration
             $table->integer('total_days');
             $table->text('reason');
             $table->enum('status', ['pending', 'approved', 'rejected'])->default('pending');
+            $table->integer('remaining_leaves');
             $table->timestamps();
-            // $table->foreign('user_id')->references('id')->on('users')->onDelete('cascade');
         });
     }
 

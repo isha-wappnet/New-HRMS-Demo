@@ -10,7 +10,7 @@ use Yajra\DataTables\Facades\DataTables;
 
 class LeavesController extends Controller
 {
-    //
+    
     public function create()
     {
         return view('auth.leave');
@@ -26,15 +26,36 @@ class LeavesController extends Controller
 
         $leaveRequest = new Leave();
         $leaveRequest->user_id = auth()->user()->id;
-        $leaveRequest->name = auth()->user()->name;
-        // dd($leaveRequest);
-        $leaveRequest->start_date = $request->start_date;
-        $leaveRequest->end_date = $request->end_date;
-        $leaveRequest->reason = $request->reason;
-        $leaveRequest->total_days = $request->total_days;
-        $leaveRequest->save();
+        $name = $leaveRequest->name = auth()->user()->name;
+        $check = Leave::where('name', $name)
+            ->where('status', 'approved')
+            ->first();
 
-        return redirect()->route('leaves.index')->with('success', 'Leave request submitted.');
+        if ($check == true) {
+            $leaveBalance = Leave::where('name', $name)->value('remaining_leaves');
+            $leaveRequest->remaining_leaves = $leaveBalance;
+            $leaveRequest->start_date = $request->input('start_date');
+            $leaveRequest->end_date = $request->input('end_date');
+            $leaveRequest->leave_type = $request->input('leave_type');
+            $leaveRequest->reason = $request->reason;
+            $leaveRequest->total_days = $request->input('total_days');
+            $leaveRequest->save();
+
+            return redirect()->route('leaves.index')->with('success', 'Leave request submitted.');
+        } 
+        else 
+        {
+            $leaveRequest = new Leave();
+            $leaveRequest->user_id = auth()->user()->id;
+            $name = $leaveRequest->name = auth()->user()->name;
+            $leaveRequest->start_date = $request->input('start_date');
+            $leaveRequest->end_date = $request->input('end_date');
+            $leaveRequest->leave_type = $request->input('leave_type');
+            $leaveRequest->reason = $request->reason;
+            $leaveRequest->total_days = $request->input('total_days');
+            $leaveRequest->save();
+            return redirect()->route('leaves.index')->with('success', 'Leave request submitted.');
+        }
     }
     public function index()
     {
@@ -42,9 +63,7 @@ class LeavesController extends Controller
     }
     public function showLeaves(Request $request)
     {
-        // $leaves = Leave::select('id','user_id', 'start_date', 'end_date', 'reason','status');
 
-        // return Datatables::of($leaves)->make(true);
         if ($request->ajax()) {
             $data = Leave::all();
             return Datatables::of($data)->addIndexColumn()
@@ -68,41 +87,36 @@ class LeavesController extends Controller
         }
         return view('auth.showleave');
     }
-    //update lravev method
-    public function updateLeaveStatus(Request $request, $id)
-{
-    $status = $request->input('status');
-    $leave = Leave::findOrFail($id);
-    $name = $leave->name; 
+        //update remaining leave
+        public function updateLeaveStatus(Request $request, $id)
+        {
+            $status = $request->input('status');
+            $leave = Leave::findOrFail($id);
+            $name = $leave->name;
+            $start_date = Carbon::createFromFormat('Y-m-d', $leave->start_date);
+            $end_date = Carbon::createFromFormat('Y-m-d', $leave->end_date);
+            $total_days = $start_date->diffInDays($end_date);
+            //check wether user has approved leabe or
+            if ($status == 'approved') 
+            {
+                $leave->status = 'approved';
+                // Fetch the latest remaining leaves from the leaves table
+                $leaveRecord = DB::table('leaves')
+                    ->where('user_id', $leave->user_id)
+                    ->orderBy('id', 'desc')
+                    ->first();
+                $remaining_leaves = ($leaveRecord) ? $leaveRecord->remaining_leaves : 0;
+                $remaining_leaves -= $total_days;
+                $remaining_leaves = max(0, $remaining_leaves);
 
-    $start_date = Carbon::createFromFormat('Y-m-d', $leave->start_date);
-    $end_date = Carbon::createFromFormat('Y-m-d', $leave->end_date);
-    $total_days = $start_date->diffInDays($end_date);
-
-    if ($status == 'approved') {
-        $leave->status = 'approved';
-
-        // Fetch the latest remaining leaves from the leaves table
-        $leaveRecord = DB::table('leaves')
-            ->where('user_id', $leave->user_id)
-            ->orderBy('id', 'desc')
-            ->first();
-
-        if ($leaveRecord) {
-            $remaining_leaves = $leaveRecord->remaining_leaves;
-        } else {
-            $remaining_leaves = 0;
-        }
-
-        $remaining_leaves = max(0, $remaining_leaves - $total_days);
-
-        $leave->remaining_leaves = $remaining_leaves;
-        $leave->save();
-    } else if ($status == 'rejected') {
-        $leave->status = 'rejected';
-        $leave->save();
-    }
-        
+                $leave->remaining_leaves = $remaining_leaves;
+                $leave->save();
+            }
+            else if ($status == 'rejected') 
+            {
+                $leave->status = 'rejected';
+                $leave->save();
+            }
         return redirect()->back()->with('success', 'Leave request status has been updated.');
     }
 }

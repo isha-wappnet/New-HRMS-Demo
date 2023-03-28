@@ -13,8 +13,8 @@ return new class extends Migration
      */
     public function up()
     {
-        Schema::table('leaves_', function (Blueprint $table) {
-            //
+        Schema::table('leaves', function (Blueprint $table) {
+            $table->integer('remaining_leaves')->default(14)->change();
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('leaves_', function (Blueprint $table) {
+        Schema::table('leaves', function (Blueprint $table) {
             //
         });
     }

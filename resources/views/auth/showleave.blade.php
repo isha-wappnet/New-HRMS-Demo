@@ -64,6 +64,7 @@
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Total Days</th>
+                                <th>Leave Type</th>
                                 <th>Reason</th>
                                 <th>Status</th>
                                 <th>Remaing Leaves</th>
@@ -114,6 +115,10 @@
                     {
                         data: 'total_days',
                         name: 'total_days'
+                    },
+                    {
+                        data: 'leave_type',
+                        name: 'leave_type'
                     },
                     {
                         data: 'reason',

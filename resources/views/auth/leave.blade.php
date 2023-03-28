@@ -142,12 +142,21 @@
                                 <input type="date" name="end_date" id="end_date" placeholder="select end date">
                             </div>
                             <div class="inputDiv">
-                                <label for="total days">Total Days</label>
-                                <input type="number" name="total_days" id="total_days" placeholder="Enter total days">
+
+                                <input type="hidden" name="total_days" id="total_days">
+                            </div>
+                            <div class="inputDiv">
+                                <label for="leave_type">Leave type:</label>
+                                <select name="leave_type" id="leave_type" required>
+                                    <option value="">Select a leave type</option>
+                                    <option value="sick">Sick leave</option>
+                                    <option value="vacation">Vacation leave</option>
+                                    <option value="personal">Personal leave</option>
+                                </select>
                             </div>
                             <div class="inputDiv">
                                 <label for="reason">Reason</label>
-                                <textarea name="reason" id="reason" placeholder="Enter reason" rows="5" required></textarea>
+                                <textarea name="reason" id="reason" placeholder="Enter reason" rows="3" ></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -168,7 +177,7 @@
                             },
                             reason: {
                                 required: true,
-                               
+
                             },
                         },
                         messages: {
@@ -198,5 +207,22 @@
                         });
                     </script>
                 @endif
+
+                <script>
+                    const start_date_input = document.querySelector('#start_date');
+                    const end_date_input = document.querySelector('#end_date');
+                    const total_days_input = document.querySelector('#total_days');
+
+                    start_date_input.addEventListener('input', updateTotalDays);
+                    end_date_input.addEventListener('input', updateTotalDays);
+
+                    function updateTotalDays() {
+                        const start_date = new Date(start_date_input.value);
+                        const end_date = new Date(end_date_input.value);
+
+                        const total_days = Math.floor((end_date - start_date) / (1000 * 60 * 60 * 24)) + 1;
+                        total_days_input.value = total_days;
+                    }
+                </script>
                 @include('layout.footer')
             @endsection

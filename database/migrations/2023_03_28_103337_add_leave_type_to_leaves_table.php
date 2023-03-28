@@ -14,7 +14,7 @@ return new class extends Migration
     public function up()
     {
         Schema::table('leaves', function (Blueprint $table) {
-            $table->integer('total_days');
+            $table->string('leave_type')->after('total_days')->nullable();
         });
     }
 
@@ -25,7 +25,7 @@ return new class extends Migration
      */
     public function down()
     {
-        Schema::table('leaves_', function (Blueprint $table) {
+        Schema::table('leaves', function (Blueprint $table) {
             //
         });
     }
