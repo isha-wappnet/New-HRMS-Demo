@@ -5,7 +5,9 @@ namespace App\Repository;
 use Illuminate\Support\Str;
 use App\Interface\AuthInterface;
 use App\Models\User;
+use App\Models\Leave;
 use Carbon\Carbon;
+use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
@@ -104,4 +106,42 @@ class AuthRepository implements AuthInterface
         $data = User::all();
         return $data;
     }
+
+    public function store( $request){
+
+        $leaveRequest = new Leave();
+        $leaveRequest->user_id = auth()->user()->id;
+        $name = $leaveRequest->name = auth()->user()->name;
+        $check = Leave::where('name', $name)
+            ->where('status', 'approved')
+            ->first();
+
+        if ($check == true) {
+            $leaveBalance = Leave::where('name', $name)->value('remaining_leaves');
+            $leaveRequest->remaining_leaves = $leaveBalance;
+            $leaveRequest->start_date = $request->input('start_date');
+            $leaveRequest->end_date = $request->input('end_date');
+            $leaveRequest->leave_type = $request->input('leave_type');
+            $leaveRequest->reason = $request->reason;
+            $leaveRequest->total_days = $request->input('total_days');
+            $leaveRequest->save();
+
+            return true;
+        }    
+        else 
+        {
+            $leaveRequest = new Leave();
+            $leaveRequest->user_id = auth()->user()->id;
+            $name = $leaveRequest->name = auth()->user()->name;
+            $leaveRequest->start_date = $request->input('start_date');
+            $leaveRequest->end_date = $request->input('end_date');
+            $leaveRequest->leave_type = $request->input('leave_type');
+            $leaveRequest->reason = $request->reason;
+            $leaveRequest->total_days = $request->input('total_days');
+            $leaveRequest->save();
+            return true;
+        }
+    }
+
+    
 }

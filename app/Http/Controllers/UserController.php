@@ -5,13 +5,13 @@ namespace App\Http\Controllers;
 use App\Repository\AuthRepository as AuthInterface;
 use Illuminate\Http\Request;
 use App\Models\User;
+use Yajra\DataTables\Facades\DataTables;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Hash;
 use Illuminate\Support\Facades\DB;
 use Carbon\Carbon;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Str;
-use DataTables;
 use Illuminate\Http\RedirectResponse;
 use GuzzleHttp\Psr7\Response;
 use Illuminate\Contracts\View\View;
@@ -20,8 +20,6 @@ use Symfony\Component\HttpFoundation\Test\Constraint\ResponseIsRedirected;
 
 class UserController extends Controller
 {
-
-
 
     private $AuthRepository;
 

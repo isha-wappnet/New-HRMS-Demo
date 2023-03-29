@@ -1,7 +1,8 @@
 <?php
 
 namespace App\Interface;
-
+use Illuminate\Http\Request;
+use App\Models\Leave;
 interface AuthInterface 
 {
    public function register($data);
@@ -14,4 +15,5 @@ interface AuthInterface
    public function editaction($request);
    public function adduser($request);
    public function datatable($request);
+   public function store( $request);
 }

@@ -131,7 +131,6 @@
                     <div class="white-box">
                         <form method="POST" action="{{ route('leave-request.store') }}" id="leave">
                             @csrf
-
                             <div class="inputDiv">
                                 <label for="start_date">Start Date</label>
                                 <input type="date" name="start_date" id="start_date" placeholder="select start date">
@@ -141,22 +140,24 @@
                                 <label for="end_date">End Date</label>
                                 <input type="date" name="end_date" id="end_date" placeholder="select end date">
                             </div>
-                            <div class="inputDiv">
 
+                            <div class="inputDiv">
                                 <input type="hidden" name="total_days" id="total_days">
                             </div>
+
                             <div class="inputDiv">
                                 <label for="leave_type">Leave type:</label>
-                                <select name="leave_type" id="leave_type" required>
+                                <select name="leave_type" id="leave_type" >
                                     <option value="">Select a leave type</option>
                                     <option value="sick">Sick leave</option>
                                     <option value="vacation">Vacation leave</option>
                                     <option value="personal">Personal leave</option>
                                 </select>
                             </div>
+
                             <div class="inputDiv">
                                 <label for="reason">Reason</label>
-                                <textarea name="reason" id="reason" placeholder="Enter reason" rows="3" ></textarea>
+                                <textarea name="reason" id="reason" placeholder="Enter reason" rows="3"></textarea>
                             </div>
 
                             <button type="submit" class="btn btn-primary">Submit</button>
@@ -173,6 +174,11 @@
                             },
                             end_date: {
                                 required: true,
+                                greaterThan: '#start_date',
+
+                            },
+                            leave_type: {
+                                required: true,
 
                             },
                             reason: {
@@ -186,7 +192,11 @@
                                 required: "Please enter start date",
                             },
                             end_date: {
-                                required: "Please enterend date",
+                                required: "Please enter end date",
+                            },
+                            leave_type: {
+                                required: "Please select from the below options" ,
+
                             },
                             reason: {
                                 required: "please enter the reason",
