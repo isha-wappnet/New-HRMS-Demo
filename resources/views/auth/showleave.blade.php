@@ -11,7 +11,7 @@
         }
 
         .table {
-            background-color: #fff;
+            background-color: #ffffff;
         }
     </style>
     <!DOCTYPE html>
@@ -25,7 +25,6 @@
             integrity="sha512-gOQQLjHRpD3/SEOtalVq50iDn4opLVup2TF8c4QPI3/NmUPNZOk2FG0ihi8oCU/qYEsw4P6nuEZT2lAG0UNYaw=="
             crossorigin="anonymous" referrerpolicy="no-referrer" />
         <script src="//cdn.datatables.net/1.13.2/js/jquery.dataTables.min.js"></script>
-
     </head>
 
     <body>
@@ -71,9 +70,6 @@
                                 @role('admin')
                                     <th width="150px">Action</th>
                                 @endrole
-
-                                {{-- <th width = "50px"><button type="button" name ="approved">Approved</button></th> --}}
-
                             </tr>
                         </thead>
                         <tbody>

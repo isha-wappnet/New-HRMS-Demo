@@ -67,11 +67,12 @@ class LeavesController extends Controller
         $this->AuthRepository->store($request);
         return redirect()->route('leaves.index')->with('success', 'Leave request submitted.');
     }
-
-    public function index() : view
+    //return leave request from 
+    public function index(): view
     {
         return view('auth.showleave');
     }
+    //show leaves data table
     public function showLeaves(Request $request)
     {
 

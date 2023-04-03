@@ -5,6 +5,7 @@ use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
 use App\Http\Controllers\CalanderController;
 use App\Http\Controllers\LeavesController;
+use App\Http\Controllers\UploadController;
 /*
 |--------------------------------------------------------------------------
 | Web Routes
@@ -61,5 +62,9 @@ Route::get('/leaves/create','create')->name('leaves.create');
 Route::post('/leave-request','store')->middleware('auth')->name('leave-request.store');
 Route::put('/leaves/{id}', 'updateLeaveStatus')->name('leaves.update');
 });
+
+
+Route::get('upload',[UploadController::class,"uploadfile"]);
+Route::post('/upload-file', [UploadController::class, 'fileUpload'])->name('fileUpload');
 
 ?>

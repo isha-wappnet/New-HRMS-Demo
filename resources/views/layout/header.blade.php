@@ -338,7 +338,7 @@
                         <!-- check menagment pages -->
                     </ul>
                 </li>
-                <li> <a href="#" class="waves-effect"><i data-icon="O" class="fa fa-file"></i>
+                <li> <a href="upload" class="waves-effect"><i data-icon="O" class="fa fa-file"></i>
                         <span class="hide-menu">Company Document</span></span></a>
                 </li>
 
@@ -349,7 +349,7 @@
                     <ul class="dropdown-menu animated flipInY">
                         <li><a href="changepassword"><i class="fa fa-key" aria-hidden="true"data-icon="!"></i>
                                 Change password</a></li>
-                        <li><a href="userprofile"><i class="fas fa-user-edit"></i> Update Profile</a></li>
+                        <li><a href="userprofile"><i class="fa fa-user" ></i> Update Profile</a></li>
                         <li><a href="users"><i class="fa fa-table" aria-hidden="true" data-icon="v"></i> View
                                 User table</a></li>
 
