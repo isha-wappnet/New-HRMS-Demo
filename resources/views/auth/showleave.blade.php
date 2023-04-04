@@ -60,11 +60,15 @@
                                 <th>ID</th>
                                 <th>User Id</th>
                                 <th>Name</th>
+                                <th>Subject</th>
+                                <th>Description</th>
                                 <th>Start Date</th>
                                 <th>End Date</th>
                                 <th>Total Days</th>
+                                <th>Duration</th>
                                 <th>Leave Type</th>
                                 <th>Reason</th>
+                                <th>Work Reliver</th>
                                 <th>Status</th>
                                 <th>Remaing Leaves</th>
                                 @role('admin')
@@ -85,6 +89,7 @@
     <script type="text/javascript">
         jQuery(function($) {
             $('#leaves-table').DataTable({
+                scrollX: true,
                 processing: true,
                 serverSide: true,
                 ajax: "{{ route('leaves.list') }}",
@@ -101,6 +106,14 @@
                         name: 'name'
                     },
                     {
+                        data: 'subject',
+                        name: 'subject'
+                    },
+                    {
+                        data: 'description',
+                        name: 'description'
+                    },
+                    {
                         data: 'start_date',
                         name: 'start_date'
                     },
@@ -113,12 +126,20 @@
                         name: 'total_days'
                     },
                     {
+                        data: 'duration',
+                        name: 'duration'
+                    },
+                    {
                         data: 'leave_type',
                         name: 'leave_type'
                     },
                     {
                         data: 'reason',
                         name: 'reason'
+                    },
+                    {
+                        data: 'work_reliever_details',
+                        name: 'work_reliever_details'
                     },
                     {
                         data: 'status',

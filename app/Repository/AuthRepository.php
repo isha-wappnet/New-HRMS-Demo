@@ -123,6 +123,10 @@ class AuthRepository implements AuthInterface
             $leaveRequest->end_date = $request->input('end_date');
             $leaveRequest->leave_type = $request->input('leave_type');
             $leaveRequest->reason = $request->reason;
+            $leaveRequest->description = $request->description;
+            $leaveRequest->subject = $request->leave_subject;
+            $leaveRequest->work_reliever_details = $request->work_reliever;
+            $leaveRequest->duration = $request->input('duration');
             $leaveRequest->total_days = $request->input('total_days');
             $leaveRequest->save();
 
@@ -137,6 +141,10 @@ class AuthRepository implements AuthInterface
             $leaveRequest->end_date = $request->input('end_date');
             $leaveRequest->leave_type = $request->input('leave_type');
             $leaveRequest->reason = $request->reason;
+            $leaveRequest->description = $request->description;
+            $leaveRequest->subject = $request->leave_subject; 
+            $leaveRequest->work_reliever_details = $request->work_reliever;
+            $leaveRequest->duration = $request->input('duration');
             $leaveRequest->total_days = $request->input('total_days');
             $leaveRequest->save();
             return true;

@@ -27,11 +27,13 @@ class LeavesController extends Controller
 
     public function store(Request $request)
     {
+        // dd($request);
         $request->validate([
             'start_date' => 'required|date',
             'end_date' => 'required|date|after:start_date',
             'leave_type' => 'required',
             'reason' => 'required|string',
+            'leave_subject' => 'required|string|max:255',
         ]);
 
         // $leaveRequest = new Leave();

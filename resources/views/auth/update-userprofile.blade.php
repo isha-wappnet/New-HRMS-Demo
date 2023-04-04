@@ -82,6 +82,12 @@
             animation: spin 2s linear infinite;
         }
 
+        label.required::after {
+            content: "* ";
+            color: red;
+        }
+
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -122,14 +128,14 @@
                             </h2>
                             @csrf
                             <div class="inputDiv">
-                                <label>New name</label>
+                                <label class="required">New name</label>
                                 <input type="text" id="name" name="name" value="{{ Auth::user()->name }}">
-                          </div>
+                            </div>
 
                             <div class="inputDiv">
-                                <label>New Email</label>
+                                <label class="required">New Email</label>
                                 <input type="email" id="email" name="email" value="{{ Auth::user()->email }}">
-                           </div>
+                            </div>
                             <div class="buttonWrapper">
                                 <button type="submit" class="submitButton pure-button pure-button-primary">
                                     <span>Update Profile</span>

@@ -18,7 +18,7 @@
             box-shadow: 0px 0 2px 0 rgba(0, 0, 0, 0.25);
         }
 
-         .formTitle {
+        .formTitle {
             font-weight: 600;
             margin-top: 20px;
             color: #2F2D3B;
@@ -92,6 +92,11 @@
             animation: spin 2s linear infinite;
         }
 
+        label.required::after {
+            content: "* ";
+            color: red;
+        }
+
         @keyframes spin {
             0% {
                 transform: rotate(0deg);
@@ -139,16 +144,16 @@
                             </h2>
                             @csrf
                             <div class="inputDiv">
-                                <label>Current Password</label>
+                                <label class="required">Current Password</label>
                                 <input type="password" id="currentpassword" name="currentpassword">
                             </div>
                             <div class="inputDiv">
-                                <label>New Password</label>
+                                <label class="required">New Password</label>
                                 <input type="password" id="new_password" name="new_password">
-                           </div>
+                            </div>
 
                             <div class="inputDiv">
-                                <label>Confirm Password</label>
+                                <label class="required">Confirm Password</label>
                                 <input type="password" id="confirmPassword" name="confirmPassword">
                             </div>
                             <div class="buttonWrapper">
@@ -192,24 +197,24 @@
                         },
                     })
                 </script>
-                 <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-                 integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-             <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
-                 integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
-                 crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-             @if (session('success'))
-                 <script>
-                     swal("Congrulation!!", "  {!! session('success') !!}", "success", {
-                         button: "OK"
-                     });
-                 </script>
-             @endif
-             @if (session('error'))
-                 <script>
-                     swal("Opps!!!", "  {!! session('error') !!}", "error", {
-                         button: "OK"
-                     });
-                 </script>
-             @endif
+                <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+                    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+                    integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
+                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                @if (session('success'))
+                    <script>
+                        swal("Congrulation!!", "  {!! session('success') !!}", "success", {
+                            button: "OK"
+                        });
+                    </script>
+                @endif
+                @if (session('error'))
+                    <script>
+                        swal("Opps!!!", "  {!! session('error') !!}", "error", {
+                            button: "OK"
+                        });
+                    </script>
+                @endif
                 @include('layout.footer')
             @endsection

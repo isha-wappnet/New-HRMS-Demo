@@ -11,7 +11,7 @@ class Leave extends Model
 {
     use HasFactory;
     protected $fillable = [
-      'user_id','start_date', 'end_date', 'reason', 'status',
+      'user_id','start_date', 'end_date', 'reason', 'status','subject','description','work_reliever_details','duration','total_days'
 	];
 
   // public static function boot()
