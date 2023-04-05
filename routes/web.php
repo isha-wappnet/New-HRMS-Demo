@@ -3,7 +3,6 @@
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthController;
 use App\Http\Controllers\UserController;
-use App\Http\Controllers\CalanderController;
 use App\Http\Controllers\LeavesController;
 use App\Http\Controllers\UploadController;
 /*
@@ -78,7 +77,7 @@ Route::controller(LeavesController::class)->group(function(){
 Route::controller(UploadController::class)->group(function(){
 
     //upload file 
-    Route::get('upload',[UploadController::class,"uploadfile"]);
-    Route::post('/upload-file', [UploadController::class, 'fileUpload'])->name('fileUpload');
+    Route::get('upload',"uploadfile");
+    Route::post('/upload-file', 'fileUpload')->name('fileUpload');
 
 });

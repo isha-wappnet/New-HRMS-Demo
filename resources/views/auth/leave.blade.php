@@ -18,6 +18,10 @@
             content: "* ";
             color: red;
         }
+
+        .error {
+            color: rgba(243, 16, 27, 0.823);
+        }
     </style>
 
     <div id="page-wrapper">
@@ -36,11 +40,13 @@
                 </div>
                 <!-- /.col-lg-12 -->
             </div>
-
             <div class="row">
                 <div class="col-sm-12">
                     <div class="white-box">
                         <div class="row">
+                            <span class='error'>
+                                <p><strong>Remaining Leave: {{ $remaining_leaves }}</strong></p>
+                            </span>
                             <form method="POST" action="{{ route('leave-request.store') }}" id="leave">
                                 @csrf
                                 <div class="col-md-12">
@@ -79,141 +85,154 @@
                                 </div>
 
                                 <input type="hidden" name="total_days" id="total_days">
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="duration" class="required">Duration</label>
-                                    <select name="duration" id="duration" class="form-control">
-                                        <option value="full_day">Full day
-                                        </option>
-                                        <option value="half_day">Half Day
-                                        </option>
-                                    </select>
-                                </div>
-                            </div>
-                            <div class="col-md-12">
-                                <div class="col-md-4">
-                                    <div class="form-group">
-                                        <label for="leave_type" class="required">Leave type:</label>
-                                        <select name="leave_type" id="leave_type" class="form-control">
-                                            <option value="">Select a leave type
-                                            </option>
-                                            <option value="sick">Sick leave</option>
-                                            <option value="vacation">Vacation leave
-                                            </option>
-                                            <option value="personal">Personal leave
-                                            </option>
-                                        </select>
+
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="required">Duration</label>
+                                            <select name="duration" id="duration" class="form-control">
+                                                <option value="">Select leave duration
+                                                </option>
+                                                <option value="full_day">Full day
+                                                </option>
+                                                <option value="half_day">Half Day
+                                                </option>
+                                            </select>
+                                        </div>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        {{-- <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="leave_type">Leave type:</label>
-                                    <select name="leave_type" id="leave_type" class="form-control">
-                                        <option value="sick">Sick leave</option>
-                                        <option value="vacation">Vacation leave
-                                        </option>
-                                        <option value="personal">Personal leave
-                                        </option>
-                                    </select>
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="required">Leave type:</label>
+                                            <select name="leave_type" id="leave_type" class="form-control">
+                                                <option value="">Select a leave type
+                                                </option>
+                                                <option value="sick">Sick leave</option>
+                                                <option value="vacation">Vacation leave
+                                                </option>
+                                                <option value="personal">Personal leave
+                                                </option>
+                                            </select>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div> --}}
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="leave_reason" class="required">Reason:</label>
-                                    <textarea name="reason" id="reason" class="form-control">{{ old('leave_reason') }}</textarea>
+
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="required">Reason:</label>
+                                            <textarea name="reason" id="reason" class="form-control">{{ old('leave_reason') }}</textarea>
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="col-md-12">
-                            <div class="col-md-4">
-                                <div class="form-group">
-                                    <label for="work_reliever" class="required">Work Reliever details:</label>
-                                    <input type="text" name="work_reliever" id="work_reliever" class="form-control"
-                                        value="{{ old('work_reliever') }}">
+                                <div class="col-md-12">
+                                    <div class="col-md-4">
+                                        <div class="form-group">
+                                            <label class="required">Work Reliever details:</label>
+                                            <input type="text" name="work_reliever" id="work_reliever"
+                                                class="form-control" value="{{ old('work_reliever') }}">
+                                        </div>
+                                    </div>
                                 </div>
-                            </div>
+                                <button type="submit" class="btn btn-primary">Submit</button>
+                                <a href="{{ url('leave') }}" class="btn btn-primary">
+                                    <span>Back</span></a>
+                            </form>
                         </div>
-                        <button type="submit" class="btn btn-primary">Submit</button>
-                        <a href="{{ url('leave') }}" class="btn btn-primary">
-                            <span>Back</span></a>
-                        </form>
                     </div>
                 </div>
-                <script>
-                    $('#leave').validate({
-                        rules: {
-
-                            start_date: {
-                                required: true,
-                            },
-                            end_date: {
-                                required: true,
-                                greaterThan: '#start_date',
-
-                            },
-                            leave_type: {
-                                required: true,
-
-                            },
-                            reason: {
-                                required: true,
-
-                            },
-                        },
-                        messages: {
-
-                            start_date: {
-                                required: "Please enter start date",
-                            },
-                            end_date: {
-                                required: "Please enter end date",
-                            },
-                            leave_type: {
-                                required: "Please select from the below options",
-
-                            },
-                            reason: {
-                                required: "please enter the reason",
-
-                            },
-                        },
-                    })
-                </script>
-                <script src="https://code.jquery.com/jquery-3.6.4.min.js"
-                    integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
-                <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
-                    integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
-                    crossorigin="anonymous" referrerpolicy="no-referrer"></script>
-                @if (session('success'))
+            </div>
                     <script>
-                        swal("Congrulation!!", "  {!! session('success') !!}", "success", {
-                            button: "OK"
-                        });
+                        $('#leave').validate({
+                            rules: {
+                                leave_subject: {
+                                    required: true,
+                                },
+                                description: {
+                                    required: true,
+                                },
+
+                                start_date: {
+                                    required: true,
+                                },
+                                end_date: {
+                                    required: true,
+                                    greaterThan: '#start_date',
+
+                                },
+                                leave_type: {
+                                    required: true,
+
+                                },
+                                duration: {
+                                    required: true,
+                                },
+                                work_reliever: {
+                                    required: true,
+                                },
+                                reason: {
+                                    required: true,
+
+                                },
+                            },
+                            messages: {
+                                leave_subject: {
+                                    required: "<span class='error'>This field is required</span>",
+                                },
+                                description: {
+                                    required: "<span class='error'>This field is required</span>",
+                                },
+                                start_date: {
+                                    required: "<span class='error'>Please enter start date</span>",
+                                },
+                                end_date: {
+                                    required: "<span class='error'>Please enter end date</span>",
+                                },
+                                leave_type: {
+                                    required: "<span class='error'>Please select from the below options</span>",
+                                },
+                                duration: {
+                                    required: "<span class='error'>Please select from the below options</span>",
+                                },
+                                work_reliever: {
+                                    required: "<span class='error'>This field is required</span>",
+                                },
+                                reason: {
+                                    required: "<span class='error'>please enter the reason</span>",
+
+                                },
+                            },
+                        })
                     </script>
-                @endif
+                    <script src="https://code.jquery.com/jquery-3.6.4.min.js"
+                        integrity="sha256-oP6HI9z1XaZNBrJURtCoUT5SUnxFr8s3BzRl+cbzUq8=" crossorigin="anonymous"></script>
+                    <script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"
+                        integrity="sha512-7VTiy9AhpazBeKQAlhaLRUk+kAMAb8oczljuyJHPsVPWox/QIXDFOnT9DUk1UC8EbnHKRdQowT7sOBe7LAjajQ=="
+                        crossorigin="anonymous" referrerpolicy="no-referrer"></script>
+                    @if (session('success'))
+                        <script>
+                            swal("Congrulation!!", "  {!! session('success') !!}", "success", {
+                                button: "OK"
+                            });
+                        </script>
+                    @endif
 
-                <script>
-                    const start_date_input = document.querySelector('#start_date');
-                    const end_date_input = document.querySelector('#end_date');
-                    const total_days_input = document.querySelector('#total_days');
+                    <script>
+                        const start_date_input = document.querySelector('#start_date');
+                        const end_date_input = document.querySelector('#end_date');
+                        const total_days_input = document.querySelector('#total_days');
 
-                    start_date_input.addEventListener('input', updateTotalDays);
-                    end_date_input.addEventListener('input', updateTotalDays);
+                        start_date_input.addEventListener('input', updateTotalDays);
+                        end_date_input.addEventListener('input', updateTotalDays);
 
-                    function updateTotalDays() {
-                        const start_date = new Date(start_date_input.value);
-                        const end_date = new Date(end_date_input.value);
+                        function updateTotalDays() {
+                            const start_date = new Date(start_date_input.value);
+                            const end_date = new Date(end_date_input.value);
 
-                        const total_days = Math.floor((end_date - start_date) / (1000 * 60 * 60 * 24)) + 1;
-                        total_days_input.value = total_days;
-                    }
-                </script>
-                @include('layout.footer')
-            @endsection
+                            const total_days = Math.floor((end_date - start_date) / (1000 * 60 * 60 * 24)) + 1;
+                            total_days_input.value = total_days;
+                        }
+                    </script>
+                    @include('layout.footer')
+                @endsection

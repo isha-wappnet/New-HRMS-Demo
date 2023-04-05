@@ -15,5 +15,6 @@ interface AuthInterface
    public function editaction($request);
    public function adduser($request);
    public function datatable($request);
+   // public function viewleavepage();
    public function store( $request);
 }

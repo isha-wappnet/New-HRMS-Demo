@@ -22,7 +22,10 @@ class LeavesController extends Controller
 
     public function create(): View
     {
-        return view('auth.leave');
+        $remaining_leaves = DB::table('leaves')
+        ->where('user_id', auth()->user()->id)
+        ->value('remaining_leaves');
+        return view('auth.leave')->with('remaining_leaves', $remaining_leaves);
     }
 
     public function store(Request $request)
@@ -36,36 +39,6 @@ class LeavesController extends Controller
             'leave_subject' => 'required|string|max:255',
         ]);
 
-        // $leaveRequest = new Leave();
-        // $leaveRequest->user_id = auth()->user()->id;
-        // $name = $leaveRequest->name = auth()->user()->name;
-        // $check = Leave::where('name', $name)
-        //     ->where('status', 'approved')
-        //     ->first();
-
-        // if ($check == true) {
-        //     $leaveBalance = Leave::where('name', $name)->value('remaining_leaves');
-        //     $leaveRequest->remaining_leaves = $leaveBalance;
-        //     $leaveRequest->start_date = $request->input('start_date');
-        //     $leaveRequest->end_date = $request->input('end_date');
-        //     $leaveRequest->leave_type = $request->input('leave_type');
-        //     $leaveRequest->reason = $request->reason;
-        //     $leaveRequest->total_days = $request->input('total_days');
-        //     $leaveRequest->save();
-
-        //     return redirect()->route('leaves.index')->with('success', 'Leave request submitted.');
-        // } 
-        // else 
-        // {
-        //     $leaveRequest = new Leave();
-        //     $leaveRequest->user_id = auth()->user()->id;
-        //     $name = $leaveRequest->name = auth()->user()->name;
-        //     $leaveRequest->start_date = $request->input('start_date');
-        //     $leaveRequest->end_date = $request->input('end_date');
-        //     $leaveRequest->leave_type = $request->input('leave_type');
-        //     $leaveRequest->reason = $request->reason;
-        //     $leaveRequest->total_days = $request->input('total_days');
-        //     $leaveRequest->save(); 
         $this->AuthRepository->store($request);
         return redirect()->route('leaves.index')->with('success', 'Leave request submitted.');
     }
